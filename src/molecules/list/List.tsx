@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import ListItem from '../../atoms/listItem/ListItem';
 import IListItemProps from '../../atoms/listItem/interfaces/IListItemProps';
 
-interface IListProps {
+export interface IListProps {
   items: IListItemProps[];
   onItemToggleSelect?: (title: string) => void;
   selectedItems: string[];

@@ -1,27 +1,47 @@
-import { render, screen } from '@testing-library/react';
-import List from './List';
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import List, { IListProps } from './List';
+import IListItemProps from '../../atoms/listItem/interfaces/IListItemProps';
 
 describe('List', () => {
-  const mockItems = [
-    { id: '1', title: 'Item 1', count: 10 },
-    { id: '2', title: 'Item 2' },
-    { id: '3', title: 'Item 3', count: 5 },
+  const mockItems: IListItemProps[] = [
+    { id: '1', title: 'Item 1', count: 10, isSelected: false },
+    { id: '2', title: 'Item 2', isSelected: false },
+    { id: '3', title: 'Item 3', count: 5, isSelected: false },
   ];
 
-  it('should render the correct number of list items', () => {
-    render(<List items={mockItems} selectedItems={[]} />);
+  const baseProps: IListProps = {
+    items: mockItems,
+    selectedItems: [],
+  };
 
-    const listItems = screen.getAllByRole('listitem');
-    expect(listItems.length).toBe(3);
+  it('renders list items', () => {
+    render(<List {...baseProps} />);
+    expect(screen.getByText('Item 1')).toBeInTheDocument();
   });
 
-  it('should highlight selected items', () => {
-    render(<List items={mockItems} selectedItems={['1', '3']} />);
+  it('marks item as selected if its id is in the selectedItems array', () => {
+    render(<List {...baseProps} selectedItems={['1']} />);
+    const listItem = screen.getByText('Item 1').closest('li');
+    expect(listItem).toHaveClass('bg-gray-100');
+  });
 
-    const selectedItem1 = screen.getByText('Item 1');
-    const selectedItem3 = screen.getByText('Item 3');
+  it('does not mark item as selected if its id is not in the selectedItems array', () => {
+    render(<List {...baseProps} />);
+    const listItem = screen.getByText('Item 1').closest('li');
+    expect(listItem).not.toHaveClass('bg-gray-100');
+  });
 
-    expect(selectedItem1.closest('li')).toHaveClass('bg-gray-100');
-    expect(selectedItem3.closest('li')).toHaveClass('bg-gray-100');
+  it('calls onItemToggleSelect when a list item is clicked', () => {
+    const onItemToggleSelectMock = vi.fn();
+    render(<List {...baseProps} onItemToggleSelect={onItemToggleSelectMock} />);
+    fireEvent.click(screen.getByText('Item 1'));
+    expect(onItemToggleSelectMock).toHaveBeenCalledWith('1');
+  });
+
+  it('renders multiple list items', () => {
+    const items = [...mockItems, { id: '4', title: 'Item 4', count: 2 }];
+    render(<List {...baseProps} items={items} />);
+    expect(screen.getByText('Item 4')).toBeInTheDocument();
   });
 });

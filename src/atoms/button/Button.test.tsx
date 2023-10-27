@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Button from './Button';
 
 describe('Button', () => {
@@ -28,5 +29,11 @@ describe('Button', () => {
 
     const button = screen.getByRole('button', { name: /click me!/i });
     expect(button).toHaveAttribute('type', 'button');
+  });
+  it('handles onClick event', () => {
+    const handleClick = vi.fn();
+    render(<Button label="Click Me" onClick={handleClick} />);
+    fireEvent.click(screen.getByText('Click Me'));
+    expect(handleClick).toHaveBeenCalledTimes(1);
   });
 });

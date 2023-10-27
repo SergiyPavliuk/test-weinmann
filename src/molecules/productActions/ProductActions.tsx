@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../../atoms/button/Button';
 
-interface ProductActionsProps {
+export interface ProductActionsProps {
   onAdd?: () => void;
   onNew?: () => void;
   onRemove?: () => void;
