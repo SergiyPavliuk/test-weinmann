@@ -24,7 +24,7 @@ describe('BasketSection', () => {
       />
     );
 
-    expect(screen.getByText('Inventory')).toBeInTheDocument();
+    expect(screen.getByText('Basket')).toBeInTheDocument();
   });
 
   it('should render the correct number of items', () => {

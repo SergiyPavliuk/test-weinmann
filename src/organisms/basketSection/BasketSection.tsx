@@ -19,7 +19,7 @@ const BasketSection: FC<BasketSectionProps> = ({
   return (
     <div className="w-full md:w-1/2 p-4">
       <div className="mb-4 flex justify-between items-center">
-        <h3 className="uppercase">Inventory</h3>
+        <h3 className="uppercase">Basket</h3>
         <ProductActions onRemove={onRemove} />
       </div>
       <List

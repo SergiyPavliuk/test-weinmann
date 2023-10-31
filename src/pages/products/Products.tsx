@@ -3,7 +3,7 @@ import useToggleSelection from '../../hooks/useToggleSelection';
 import ShoppingTemplate from '../../templates/shoppingTemplate/ShoppingTemplate';
 import useProducts from '../../models/useProducts/useProducts';
 import { useQueryClient } from 'react-query';
-import IProduct from '../../api/interfaces/IProducts';
+import IProduct from '../../api/interfaces/IProduct';
 import NewInventoryModal from '../../organisms/newInventoryModal/NewInventoryModal';
 interface CartItem {
   id: string;
